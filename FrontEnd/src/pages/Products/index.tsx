@@ -44,18 +44,18 @@ const ProductsPage: React.FC = () => {
         if (!query.trim()) {
             return setFilteredData(data);
         }
-        
+
         const searchTerms = query.toLowerCase().split(' ');
         const filtered = data.filter(product => {
             const name = product.name.toLowerCase();
             // const description = product.desc?.toLowerCase() || '';
-            
+
             // Kiểm tra nếu sản phẩm chứa ít nhất một từ trong từ khóa tìm kiếm
-            return searchTerms.some(term => 
-                name.includes(term) 
+            return searchTerms.some(term =>
+                name.includes(term)
             );
         });
-        
+
         setFilteredData(filtered);
     }, [data]);
 
@@ -78,7 +78,7 @@ const ProductsPage: React.FC = () => {
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {filteredData.length > 0 ? (
-                            filteredData.map((item) => <ItemProduct data={item} key={item.id} />)
+                            filteredData.map((item) => <ItemProduct data={item} key={item._id} />)
                         ) : (
                             <p className="text-center col-span-3 text-gray-500">
                                 Không có sản phẩm nào phù hợp với tìm kiếm

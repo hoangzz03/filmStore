@@ -7,7 +7,7 @@ interface ProductProps {
 
 const ItemProduct: React.FC<ProductProps> = ({ data }) => {
     return (
-        <Link to={`/detailproduct/${data.id}`} className="bg-white p-4 rounded-lg shadow-md flex flex-col items-center">
+        <Link to={`/detailproduct/${data._id}`} className="bg-white p-4 rounded-lg shadow-md flex flex-col items-center">
             <div>
                 <img
                     src={data.image}

@@ -1,43 +1,41 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ItemProduct from "../../components/ItemProduct";
 import ItemBlog from "../../components/ItemBlog";
 import { getAllProduct } from "../Products/utils/product.utils";
-import { Link } from 'react-router-dom';
-import { AuthState, Payment, ProductData, UserFull } from "../../types";
-import { checkLogin } from "../Auth/utils/login.utils";
+import { ProductData } from "../../types";
 import HeroImageSlider from "../../components/heroImageSlider";
 const Home = () => {
     const [data, setData] = useState<ProductData[]>([]);
     const [loading, setLoading] = useState(true);
-    const [user, setUser] = useState<UserFull>();
-    const [auth, setAuth] = useState<AuthState>();
-    const server = import.meta.env.VITE_SERVER;
+    // const [user, setUser] = useState<UserFull>();
+    // const [auth, setAuth] = useState<AuthState>();
+    // const server = import.meta.env.VITE_SERVER;
 
     // ✅ Kiểm tra đăng nhập
-    useEffect(() => {
-        const checkout = async () => {
-            try {
-                const data = await checkLogin();
-                if (!data?._id) {
-                    setUser(undefined);
-                    return;
-                }
-                setAuth(data);
-                const response = await fetch(`${server}/api/users/${data._id}`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${data.accessToken}`,
-                    },
-                });
-                const res = await response.json();
-                setUser(res._id ? res : undefined);
-            } catch (error) {
-                console.error("Lỗi khi kiểm tra login:", error);
-            }
-        };
-        checkout();
-    }, []);
+    // useEffect(() => {
+    //     const checkout = async () => {
+    //         try {
+    //             const data = await checkLogin();
+    //             if (!data?._id) {
+    //                 setUser(undefined);
+    //                 return;
+    //             }
+    //             setAuth(data);
+    //             const response = await fetch(`${server}/api/users/${data._id}`, {
+    //                 method: "GET",
+    //                 headers: {
+    //                     "Content-Type": "application/json",
+    //                     Authorization: `Bearer ${data.accessToken}`,
+    //                 },
+    //             });
+    //             const res = await response.json();
+    //             setUser(res._id ? res : undefined);
+    //         } catch (error) {
+    //             console.error("Lỗi khi kiểm tra login:", error);
+    //         }
+    //     };
+    //     checkout();
+    // }, []);
 
     // ✅ Lấy danh sách sản phẩm
     useEffect(() => {

@@ -10,11 +10,8 @@ const ProductPage = () => {
   const [quantity, setQuantity] = useState(1);
   const [data, setData] = useState<ProductData>();
   const { id } = useParams();
-  const [auth, setAuth] = useState<AuthState>({
-    isAuthenticated: false,
-    user: null
-  });
-  
+  const [auth, setAuth] = useState<AuthState>();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -36,7 +33,7 @@ const ProductPage = () => {
   }, [id]);
 
   const addToCart = async () => {
-    if (auth.isAuthenticated) {
+    if (auth?._id) {
       try {
         const res = await fetch(`${server}/order-detail`, {
           method: 'POST',
@@ -46,10 +43,10 @@ const ProductPage = () => {
           body: JSON.stringify({
             product: data,
             quantity: quantity,
-            user: auth.user,
+            user: auth,
           }),
         });
-        
+
         if (res.ok) {
           // Hiển thị thông báo thành công
           toast.success(`Đã thêm ${data?.name} vào giỏ hàng`, {
@@ -82,7 +79,7 @@ const ProductPage = () => {
     <div className="flex flex-col gap-5">
       {/* Thêm ToastContainer vào component */}
       <ToastContainer />
-      
+
       <div className="flex p-10 gap-10">
         {/* Image Gallery */}
         <div className="flex flex-col gap-3">
@@ -94,31 +91,31 @@ const ProductPage = () => {
             ))}
           </div>
         </div>
-        
+
         <div className="max-w-md">
           <div>
             <h1 className="text-2xl font-bold mt-2">{data?.name}</h1>
             <p className="text-gray-600 text-lg">{data?.desc}</p>
           </div>
-          
+
           {/* Pricing */}
           <div className="flex items-center gap-4 mt-4">
             <span className="text-red-500 text-2xl font-semibold">{data?.price?.toLocaleString('vi-VN')}</span>
             <span className="text-gray-400 line-through text-lg">{data?.price ? (data.price * 1.2).toLocaleString('vi-VN') : data?.price?.toLocaleString('vi-VN')}</span>
           </div>
-          
+
           {/* Quantity Selection */}
           <div className="flex items-center gap-4 mt-4">
             <span className="text-gray-600">Số lượng:</span>
             <div className="flex items-center border rounded">
-              <button 
+              <button
                 onClick={() => setQuantity(prev => prev > 1 ? prev - 1 : 1)}
                 className="px-3 py-1 border-r"
               >
                 -
               </button>
               <span className="px-4">{quantity}</span>
-              <button 
+              <button
                 onClick={() => setQuantity(prev => prev + 1)}
                 className="px-3 py-1 border-l"
               >
@@ -126,15 +123,15 @@ const ProductPage = () => {
               </button>
             </div>
           </div>
-          
+
           {/* Add to Cart Button */}
-          <button 
-            onClick={addToCart} 
+          <button
+            onClick={addToCart}
             className="bg-red-600 text-white w-full h-[3rem] rounded-[0.5rem] mt-4 cursor-pointer"
           >
             Thêm vào giỏ hàng  {data?.price ? (data.price * quantity).toLocaleString('vi-VN') : '0'} VND
           </button>
-          
+
           {/* Payment Options */}
           <button className="w-full h-[3rem] bg-indigo-600 text-white p-2 rounded-[0.5rem] mt-4">Mua ngay</button>
           <p className="text-center text-gray-500 mt-2 cursor-pointer">Xem thêm phương thức thanh toán</p>
