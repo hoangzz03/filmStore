@@ -29,11 +29,12 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "*",
+    origin: ["https://film-store-j4mz.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
+
 
 app.use("/api/auth", authRoutes);
 app.use("/api/blogs", blogRoutes);
