@@ -29,9 +29,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: process.env.FE,
+    origin: [process.env.FE],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
-  })  
+  })
 );
 
 app.use("/api/auth", authRoutes);
