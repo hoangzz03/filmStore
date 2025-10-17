@@ -17,14 +17,17 @@ const ProductPage = () => {
       try {
         const data = await checkLogin();
         setAuth(data);
-        const res = await fetch(`${server}/products/${id}`, {
+        const res = await fetch(`${server}/api/products/${id}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
           }
         });
         const data2 = await res.json();
-        setData(data2[0]);
+        setData(data2);
+        console.log('====================================');
+        console.log(data2);
+        console.log('====================================');
       } catch (error) {
         console.error("Failed to check login status:", error);
       }
